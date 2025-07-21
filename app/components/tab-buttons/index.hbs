@@ -1,7 +1,7 @@
 <div local-class="tabs">
   <button
     type="button"
-    local-class={{if (eq @activeTab "Audit") "tabActive" "tab"}}
+    local-class="tab {{if (eq @activeTab 'Audit') 'tab--active'}}"
     {{on "click" (fn @setTab "Audit")}}
   >
     Audit
@@ -9,7 +9,7 @@
 
   <button
     type="button"
-    local-class={{if (eq @activeTab "Examples") "tabActive" "tab"}}
+    local-class="tab {{if (eq @activeTab 'Examples') 'tab--active'}}"
     {{on "click" (fn @setTab "Examples")}}
   >
     Examples

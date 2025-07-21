@@ -1,14 +1,30 @@
 .tabs {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 0;
 }
-.tab,
-.tabActive {
+
+.tab {
   padding: 0.5rem 1rem;
-  border: 2px solid #000;
-  background: none;
-  cursor: pointer;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
   font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  margin-bottom: -2px;
+}
+
+.tab:not(.tab--active):hover {
+  background-color: #ddd;
+}
+
+.tab--active {
+  background-color: white;
+  color: #100409;
+  border: 1px solid #ccc;
+  border-bottom: 2px solid white;
+  position: relative;
+  z-index: 2;
 }
