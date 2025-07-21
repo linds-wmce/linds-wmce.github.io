@@ -43,9 +43,11 @@ module.exports = function (environment) {
     ENV.APP.autoboot = false;
   }
 
-  if (environment === 'production') {
-    // here you can enable a production-specific feature
-  }
+if (environment === 'production') {
+  ENV.rootURL = '/linds-wmce.github.io/';
+  ENV.locationType = 'hash'; // Required for static GitHub hosting
+}
+
 
   return ENV;
 };
