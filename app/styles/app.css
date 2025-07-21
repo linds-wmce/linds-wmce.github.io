@@ -1,3 +1,37 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+  --color-bg: #ffffff;
+  --color-text: #100409;
+  --color-accent: #c490d1;
+  --color-muted: #f1f1f1;
+  --color-banner-bg: #f9f7fb;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: system-ui, sans-serif;
+}
+
+button {
+  background: var(--color-accent);
+  color: var(--color-text);
+  border: none;
+  padding: 0.5em 1em;
+  font-weight: 600;
+  border-radius: 0.25rem;
+}
+
+button.secondary {
+  background: transparent;
+  border: 1px solid var(--color-accent);
+  color: var(--color-text);
+}
+
+textarea,
+input {
+  border: 1px solid var(--color-muted);
+  background: #fff;
+  padding: 0.75em;
+  width: 100%;
+  border-radius: 0.25rem;
+}
