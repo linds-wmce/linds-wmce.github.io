@@ -1,36 +1,16 @@
-<form {{on "submit" this.runAudit}} class="space-y-4">
-  <label for="html-input" class="block font-semibold">HTML to Audit:</label>
+<form {{on "submit" @runAudit}} local-class="form">
+  <div local-class="instructions">
+    Paste your HTML into the form below and click "Run Audit" to get started.
+  </div>
+
+  <label for="html-input" local-class="label">HTML to Audit:</label>
   <textarea
     id="html-input"
-    class="w-full p-2 border border-gray-300 rounded"
+    local-class="textarea"
     rows="8"
-    {{on "input" this.updateInput}}
+    value={{@htmlInput}}
+    {{on "input" @updateInput}}
   ></textarea>
 
-  <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
-    Run Audit
-  </button>
+  <button type="submit" local-class="submit">Run Audit</button>
 </form>
-
-{{#if this.auditResults.length}}
-  <h2 class="mt-6 font-bold text-lg">Accessibility Issues Found:</h2>
-  <ul class="space-y-4 mt-2">
-    {{#each this.auditResults as |violation|}}
-      <li class="border p-4 rounded shadow">
-        <strong>{{violation.id}}</strong> — {{violation.impact}}
-        <p>{{violation.description}}</p>
-        <p class="text-sm text-gray-600">{{violation.help}}</p>
-        <ul class="mt-2 text-sm list-disc pl-6">
-          {{#each violation.nodes as |node|}}
-            <li>
-              Affected: <code>{{node.target}}</code><br />
-              Snippet: <code>{{node.html}}</code>
-            </li>
-          {{/each}}
-        </ul>
-      </li>
-    {{/each}}
-  </ul>
-{{else if this.htmlInput}}
-  <p class="mt-6 text-green-700 font-semibold">No issues found 🎉</p>
-{{/if}}
