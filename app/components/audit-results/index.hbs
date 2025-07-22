@@ -1,0 +1,26 @@
+{{#if (and @results (gt @results.length 0))}}
+  <div local-class="results">
+    <h2>Accessibility Issues Found:</h2>
+    <ul>
+      {{#each @results as |violation|}}
+        <li>
+          <strong>{{violation.id}}</strong> — {{violation.impact}}
+          <p>{{violation.description}}</p>
+          <p>{{violation.help}}</p>
+          <ul>
+            {{#each violation.nodes as |node|}}
+              <li>
+                Affected: <code>{{node.target}}</code><br />
+                Snippet: <code>{{node.html}}</code>
+              </li>
+            {{/each}}
+          </ul>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+{{else if @htmlInput}}
+  <p local-class="noIssues">
+    Click Run Audit to check your HTML for accessibility issues 🔍
+  </p>
+{{/if}}
