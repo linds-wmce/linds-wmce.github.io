@@ -1,24 +1,44 @@
-{{page-title "A11ycat"}}
-  <PageLayout>
-    <LogoHeader />
+{{page-title 'A11ycat'}}
 
-    <TabButtons
-      @activeTab={{this.activeTab}}
-      @setTab={{this.setTab}}
-    />
+<PageLayout>
 
-    {{#if (eq this.activeTab "Audit")}}
-    <AuditForm
-      @htmlInput={{this.htmlInput}}
-      @updateInput={{this.updateInput}}
-      @runAudit={{this.runAudit}}
-    />
+  <MainHeader />
 
-    <AuditResults @results={{this.auditResults}} @htmlInput={{this.htmlInput}} />
-      {{else if (eq this.activeTab "Examples")}}
-        <Examples />
-      {{/if}}
-    </PageLayout>
+  <TabButtons @activeTab={{this.activeTab}} @setTab={{this.setTab}} />
 
+  {{#if (eq this.activeTab 'Audit')}}
+    <main id='main' class='w-full'>
+      <section
+        class='audit-region'
+        role='region'
+        aria-labelledby='audit-heading'
+        aria-busy={{this.isLoading}}
+      >
+        <h2 id='audit-heading' class='sr-only'>
+          Accessibility audit
+        </h2>
+
+        <AuditForm
+          @htmlInput={{this.htmlInput}}
+          @updateInput={{this.updateInput}}
+          @runAudit={{this.runAudit}}
+          @isLoading={{this.isLoading}}
+        />
+
+        <AuditResults
+          @results={{this.auditResults}}
+          @htmlInput={{this.htmlInput}}
+          @isLoading={{this.isLoading}}
+        />
+
+      </section>
+    </main>
+  {{else if (eq this.activeTab 'Examples')}}
+    <section role='region' aria-labelledby='examples-heading'>
+      <h2 id='examples-heading' class='sr-only'>Examples</h2>
+      <Examples />
+    </section>
+  {{/if}}
+</PageLayout>
 
 {{outlet}}
