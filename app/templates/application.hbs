@@ -14,21 +14,18 @@
         aria-labelledby='audit-heading'
         aria-busy={{this.isLoading}}
       >
-        <h2 id='audit-heading' class='sr-only'>
-          Accessibility audit
-        </h2>
-
         <AuditForm
           @htmlInput={{this.htmlInput}}
           @updateInput={{this.updateInput}}
           @runAudit={{this.runAudit}}
-          @isLoading={{this.isLoading}}
+          @clearResults={{this.clearResults}}
         />
 
         <AuditResults
           @results={{this.auditResults}}
           @htmlInput={{this.htmlInput}}
           @isLoading={{this.isLoading}}
+          @auditRun={{this.auditRun}}
         />
 
       </section>

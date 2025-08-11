@@ -13,22 +13,25 @@ export default class ApplicationController extends Controller {
 
   @tracked activeTab = 'Audit';
   @tracked htmlInput = '';
-  @tracked auditResults: AuditResult[] = [];
   @tracked isLoading = false;
+  @tracked auditResults: AuditResult[] | null = null;
+  @tracked auditRun = false;
 
-  @action updateInput(event: Event) {
+  @action
+  updateInput(event: Event) {
     const target = event.target as HTMLTextAreaElement;
     this.htmlInput = target.value;
-  }
 
-  @action setTab(name: string) {
-    this.activeTab = name;
+    if (!this.htmlInput.trim()) {
+      this.auditResults = null;
+      this.auditRun = false;
+    }
   }
 
   @action
   async runAudit(event: Event) {
     event.preventDefault();
-
+    this.auditRun = true;
     this.isLoading = true;
 
     try {
@@ -36,16 +39,20 @@ export default class ApplicationController extends Controller {
         this.a11yAudit.runAudit(this.htmlInput),
         sleep(MIN_LOADING_MS),
       ]);
-
-      this.auditResults = results as AuditResult[];
+      this.auditResults = results;
     } finally {
       this.isLoading = false;
     }
   }
 
   @action
+  setTab(name: string) {
+    this.activeTab = name;
+  }
+
+  @action
   focusResults(element: HTMLElement) {
-    if (this.auditResults?.length >= 0) {
+    if (this.auditResults) {
       element.focus();
     }
   }
