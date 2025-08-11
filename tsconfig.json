@@ -1,14 +1,20 @@
 {
   "extends": "@tsconfig/ember/tsconfig.json",
   "compilerOptions": {
+    "target": "es5",
+    "module": "es2015",
+    "lib": ["ES2015", "DOM"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
-    "types": [],
-    "typeRoots": ["./types", "./node_modules/@types"],
     "paths": {
       "a11ycat/tests/*": ["tests/*"],
       "a11ycat/*": ["app/*"],
       "*": ["types/*"]
-    }
+    },
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
   "include": ["app/**/*", "tests/**/*", "types/**/*"]
 }
