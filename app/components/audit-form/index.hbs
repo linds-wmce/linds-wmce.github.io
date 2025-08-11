@@ -1,8 +1,9 @@
 <form {{on 'submit' this.handleSubmit}} local-class='form'>
   <p id='form-instructions' local-class='instructions'>
-    Paste your HTML into the form below and click
-    <strong>Run Audit</strong>
-    to get started.
+    <p>Find accessibility violations in your HTML with ease, with the help of
+      a11ycat, your friendly neighbourhood accessibility auditor.
+    </p>
+    <p>Find some examples of HTML to use on the Examples tab.</p>
   </p>
 
   <label for='html-input' local-class='label'>HTML to Audit:</label>
@@ -15,12 +16,14 @@
     {{on 'input' this.handleInput}}
     aria-describedby='form-instructions'
     spellcheck='false'
+    placeholder="Paste your HTML here and click 'Run Audit' to get started."
   ></textarea>
 
   <button
     type='submit'
     local-class='submit'
     aria-describedby='form-instructions'
+    disabled={{not @htmlInput}}
   >
     Run Audit
   </button>
