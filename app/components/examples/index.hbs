@@ -1,33 +1,43 @@
-<div local-class='examples'>
-  <h2>Good HTML Example</h2>
+<section local-class='examples'>
+  <h2 id='good-html-heading'>Good HTML Example</h2>
   <button
     type='button'
+    aria-describedby='good-html-heading'
     {{on 'click' this.copyCode}}
     local-class='copy-btn'
-  >Copy</button>
+  >
+    Copy
+  </button>
   <pre local-class='code'>
-    &lt;img src="image.jpg" alt="Sunset over the ocean"&gt; &lt;button
-    type="submit"&gt;Submit&lt;/button&gt; &lt;a href="/about"&gt;Learn more
-    about us&lt;/a&gt; &lt;form&gt; &lt;label for="name"&gt;Name&lt;/label&gt;
-    &lt;input type="text" id="name"&gt; &lt;label
-    for="email"&gt;Email&lt;/label&gt; &lt;input type="email" id="email"&gt;
-    &lt;/form&gt; &lt;div style="color: #000; background: #fff;"&gt;High
-    contrast text&lt;/div&gt;
+    <code>
+      &lt;img src="image.jpg" alt="Sunset over the ocean"&gt; &lt;button
+      type="submit"&gt;Submit&lt;/button&gt; &lt;a href="/about"&gt;Learn more
+      about us&lt;/a&gt; &lt;form&gt; &lt;label for="name"&gt;Name&lt;/label&gt;
+      &lt;input type="text" id="name"&gt; &lt;label
+      for="email"&gt;Email&lt;/label&gt; &lt;input type="email" id="email"&gt;
+      &lt;/form&gt; &lt;div style="color: #000; background: #fff;"&gt;High
+      contrast text&lt;/div&gt;
+    </code>
   </pre>
-</div>
+</section>
 
-<div local-class='examples'>
-  <h2>Bad HTML Example</h2>
+<section local-class='examples'>
+  <h2 id='bad-html-heading'>Bad HTML Example</h2>
   <button
     type='button'
+    aria-describedby='bad-html-heading'
     {{on 'click' this.copyCode}}
     local-class='copy-btn'
-  >Copy</button>
+  >
+    Copy
+  </button>
   <pre local-class='code'>
-    &lt;img src="image.jpg"&gt; &lt;button&gt;&lt;/button&gt; &lt;a
-    href="#"&gt;Click here&lt;/a&gt; &lt;form&gt; &lt;input type="text"
-    id="name"&gt; &lt;label&gt;Email&lt;/label&gt; &lt;input type="email"
-    id="email"&gt; &lt;/form&gt; &lt;div style="color: #aaa; background:
-    #fff;"&gt;Low contrast text&lt;/div&gt;
+    <code>
+      &lt;img src="image.jpg"&gt; &lt;button&gt;&lt;/button&gt; &lt;a
+      href="#"&gt;Click here&lt;/a&gt; &lt;form&gt; &lt;input type="text"
+      id="name"&gt; &lt;label&gt;Email&lt;/label&gt; &lt;input type="email"
+      id="email"&gt; &lt;/form&gt; &lt;div style="color: #aaa; background:
+      #fff;"&gt;Low contrast text&lt;/div&gt;
+    </code>
   </pre>
-</div>
+</section>

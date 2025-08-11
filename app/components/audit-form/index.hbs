@@ -1,16 +1,27 @@
-<form {{on 'submit' @runAudit}} local-class='form'>
-  <div local-class='instructions'>
-    Paste your HTML into the form below and click "Run Audit" to get started.
-  </div>
+<form {{on 'submit' this.handleSubmit}} local-class='form'>
+  <p id='form-instructions' local-class='instructions'>
+    Paste your HTML into the form below and click
+    <strong>Run Audit</strong>
+    to get started.
+  </p>
 
   <label for='html-input' local-class='label'>HTML to Audit:</label>
   <textarea
     id='html-input'
+    name='html-input'
     local-class='textarea'
     rows='8'
     value={{@htmlInput}}
-    {{on 'input' @updateInput}}
+    {{on 'input' this.handleInput}}
+    aria-describedby='form-instructions'
+    spellcheck='false'
   ></textarea>
 
-  <button type='submit' local-class='submit'>Run Audit</button>
+  <button
+    type='submit'
+    local-class='submit'
+    aria-describedby='form-instructions'
+  >
+    Run Audit
+  </button>
 </form>
