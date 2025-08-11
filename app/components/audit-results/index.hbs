@@ -1,26 +1,72 @@
-{{#if (and @results (gt @results.length 0))}}
-  <div local-class="results">
-    <h2>Accessibility Issues Found:</h2>
-    <ul>
-      {{#each @results as |violation|}}
-        <li>
-          <strong>{{violation.id}}</strong> — {{violation.impact}}
-          <p>{{violation.description}}</p>
-          <p>{{violation.help}}</p>
-          <ul>
-            {{#each violation.nodes as |node|}}
-              <li>
-                Affected: <code>{{node.target}}</code><br />
-                Snippet: <code>{{node.html}}</code>
-              </li>
-            {{/each}}
-          </ul>
-        </li>
-      {{/each}}
-    </ul>
-  </div>
-{{else if @htmlInput}}
-  <p local-class="noIssues">
-    Click Run Audit to check your HTML for accessibility issues 🔍
-  </p>
-{{/if}}
+<section
+  local-class='resultsRegion'
+  role='region'
+  aria-labelledby='results-heading'
+  aria-busy={{@isLoading}}
+  aria-atomic='true'
+>
+  <h2
+    id='results-heading'
+    tabindex='-1'
+    {{did-insert this.captureHeading}}
+    {{did-update this.onResultsChange @isLoading @results}}
+  >
+    {{#if (and @results (gt @results.length 0))}}
+      Accessibility issues found ({{@results.length}})
+    {{else if (and @results (eq @results.length 0))}}
+      No accessibility issues found
+    {{else}}
+      Accessibility results
+    {{/if}}
+  </h2>
+
+  {{#if @isLoading}}
+    <LoadingScreen @message='Running audit…' />
+  {{else}}
+    {{#if @results}}
+      <p class='sr-only' aria-live='polite'>
+        {{if
+          (gt @results.length 0)
+          (concat 'Audit complete. Found ' @results.length ' issues.')
+          'Audit complete. No issues found.'
+        }}
+      </p>
+    {{/if}}
+
+    {{#if (and @results (gt @results.length 0))}}
+      <ul local-class='results'>
+        {{#each @results key='id' as |violation|}}
+          <li>
+            <strong>{{violation.id}}</strong>
+            —
+            {{violation.impact}}
+            <p>{{violation.description}}</p>
+            <p>{{violation.help}}</p>
+
+            {{#if violation.nodes}}
+              <ul>
+                {{#each violation.nodes key='@index' as |node|}}
+                  <li>
+                    Affected:
+                    <code>{{get node 'target.0'}}</code><br />
+                    Snippet:
+                    <code>{{node.html}}</code>
+                  </li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+
+    {{else if (and @htmlInput (not @results))}}
+      <p local-class='noResultsYet'>
+        Click “Run Audit” to check your HTML for accessibility issues 🔍
+      </p>
+    {{else if (not @htmlInput)}}
+      <p local-class='noInput'>
+        Paste some HTML to get started.
+      </p>
+    {{/if}}
+  {{/if}}
+</section>
