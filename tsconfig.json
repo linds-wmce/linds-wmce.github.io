@@ -1,25 +1,14 @@
 {
   "extends": "@tsconfig/ember/tsconfig.json",
   "compilerOptions": {
-
-    "typeRoots": ["./types", "./node_modules/@types"]
-,
     "baseUrl": ".",
+    "types": ["ember__render-modifiers"],
+    "typeRoots": ["./types", "./node_modules/@types"],
     "paths": {
-      "a11ycat/tests/*": [
-        "tests/*"
-      ],
-      "a11ycat/*": [
-        "app/*"
-      ],
-      "*": [
-        "types/*"
-      ]
+      "a11ycat/tests/*": ["tests/*"],
+      "a11ycat/*": ["app/*"],
+      "*": ["types/*"]
     }
   },
-  "include": [
-    "app/**/*",
-    "tests/**/*",
-    "types/**/*"
-  ]
+  "include": ["app/**/*", "tests/**/*", "types/**/*"]
 }

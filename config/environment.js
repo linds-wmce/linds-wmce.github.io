@@ -43,10 +43,10 @@ module.exports = function (environment) {
     ENV.APP.autoboot = false;
   }
 
-    if (environment === 'production') {
-      ENV.rootURL = '/';
-      ENV.locationType = 'hash';
-    }
+  if (environment === 'production') {
+    ENV.rootURL = '/';
+    ENV.locationType = 'hash';
+  }
 
   return ENV;
 };
