@@ -2,7 +2,7 @@
   "extends": "@tsconfig/ember/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "types": ["ember__render-modifiers"],
+    "types": [],
     "typeRoots": ["./types", "./node_modules/@types"],
     "paths": {
       "a11ycat/tests/*": ["tests/*"],
