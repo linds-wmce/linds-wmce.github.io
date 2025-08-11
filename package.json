@@ -92,6 +92,7 @@
     "prettier": "^2.5.1",
     "qunit": "^2.17.2",
     "qunit-dom": "^1.6.0",
+    "qunit-theme-ember": "^1.0.0",
     "typescript": "^5.8.3",
     "webpack": "^5"
   },
