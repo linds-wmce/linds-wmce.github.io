@@ -1,0 +1,75 @@
+/* Global speed control */
+:root {
+  --run-duration: 1200ms;
+  --stride-duration: 200ms;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  overflow: hidden;
+}
+
+.chase-scene-container {
+  width: 500px;
+  height: 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.laser {
+  width: 8px;
+  height: 8px;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+  top: 65%;
+  transform: translateY(-50%);
+  animation: laser-move var(--run-duration) linear infinite;
+}
+
+.cat {
+  width: 60px;
+  height: 50px;
+  background: url('/assets/a11ycat-run-1.png') no-repeat center/contain;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: cat-move var(--run-duration) linear infinite,
+    cat-run var(--stride-duration) steps(2) infinite;
+}
+
+@keyframes laser-move {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes cat-move {
+  0% {
+    left: -60px;
+  }
+  100% {
+    left: calc(100% - 60px);
+  }
+}
+
+@keyframes cat-run {
+  0% {
+    background-image: url('/assets/a11ycat-run-1.png');
+  }
+  50% {
+    background-image: url('/assets/a11ycat-run-2.png');
+  }
+  100% {
+    background-image: url('/assets/a11ycat-run-3.png');
+  }
+}
