@@ -3,12 +3,14 @@ describe('Audit flow', () => {
     cy.visit('/');
 
     // Paste HTML into the textarea
-    cy.get('#html-input').clear().type(
-      `<img src="image.jpg">
+    cy.get('#html-input')
+      .clear()
+      .type(
+        `<img src="image.jpg">
 <button></button>
 <a href="#">Click here</a>`,
-      { parseSpecialCharSequences: false }
-    );
+        { parseSpecialCharSequences: false }
+      );
 
     // Click Run Audit
     cy.contains('button', /run audit/i).click();
@@ -19,7 +21,9 @@ describe('Audit flow', () => {
       .and(($h) => {
         const text = $h.text();
         expect(
-          /Accessibility issues found|No accessibility issues found|Running audit…/i.test(text)
+          /Accessibility issues found|No accessibility issues found|Running audit…/i.test(
+            text
+          )
         ).to.eq(true);
       });
 

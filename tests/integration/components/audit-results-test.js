@@ -10,6 +10,5 @@ module('Integration | Component | audit-results', function (hooks) {
     await render(hbs`<AuditResults />`);
 
     assert.dom(this.element).hasText('Audit Results');
-
   });
 });

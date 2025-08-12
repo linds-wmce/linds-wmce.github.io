@@ -5,7 +5,10 @@ import 'cypress-axe';
 // pretty-print each violation and highlight nodes on the page
 Cypress.Commands.add(
   'checkA11yWithLog',
-  (options: Parameters<typeof cy.checkA11y>[1] = null, skipFailures = false) => {
+  (
+    options: Parameters<typeof cy.checkA11y>[1] = null,
+    skipFailures = false
+  ) => {
     cy.injectAxe();
 
     // add a simple highlighter style once

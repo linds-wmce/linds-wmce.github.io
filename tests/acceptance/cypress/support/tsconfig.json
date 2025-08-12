@@ -5,9 +5,5 @@
     "types": ["cypress", "node"],
     "esModuleInterop": true
   },
-  "include": [
-    "../cypress.config.ts",
-    "./**/*.ts",
-    "./**/*.tsx"
-  ]
+  "include": ["../cypress.config.ts", "./**/*.ts", "./**/*.tsx"]
 }
