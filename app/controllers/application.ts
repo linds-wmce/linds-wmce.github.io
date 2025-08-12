@@ -6,7 +6,7 @@ import type A11yAuditService from '../services/a11y-audit';
 import type { AuditResult } from '../services/a11y-audit';
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-const MIN_LOADING_MS = 1200;
+const MIN_LOADING_MS = 1400;
 
 export default class ApplicationController extends Controller {
   @service declare a11yAudit: A11yAuditService;

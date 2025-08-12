@@ -1,16 +1,33 @@
-<div
-  local-class='loading-container'
-  role='status'
-  aria-live='polite'
-  aria-atomic='true'
-  aria-label='Animation of the a11ycat chasing a laser pointer across the screen while we run your audit'
+{{! app/components/audit-loading-modal.hbs }}
+<ModalDialog
+  @onClose={{@onClose}}
+  @overlayClass='modal-overlay'
+  @containerClass='modal-container'
+  @hasOverlay={{true}}
+  @targetAttachment='center'
+  @translucentOverlay={{true}}
+  role='alertdialog'
+  aria-modal='true'
+  aria-labelledby='audit-loading-title'
 >
-  <p local-class='loading-message'>
-    Now chasing the laser pointer… ahem, your accessibility issues!
-  </p>
+  <div
+    local-class='loading-container'
+    role='status'
+    aria-live='polite'
+    aria-atomic='true'
+    aria-label='Animation of the a11ycat chasing a laser pointer across the screen while we run your audit'
+  >
+    <h2 id='audit-loading-title' class='sr-only'>
+      Running Accessibility Audit
+    </h2>
 
-  <div local-class='chase-scene-container'>
-    <div local-class='laser' aria-hidden='true'></div>
-    <div local-class='cat' aria-hidden='true'></div>
+    <p local-class='loading-message'>
+      a11ycat is busy at work, please hold on.
+    </p>
+
+    <div local-class='chase-scene-container'>
+      <div local-class='laser' aria-hidden='true'></div>
+      <div local-class='cat' aria-hidden='true'></div>
+    </div>
   </div>
-</div>
+</ModalDialog>

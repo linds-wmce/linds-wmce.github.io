@@ -4,34 +4,46 @@
   aria-labelledby='results-heading'
   aria-busy={{@isLoading}}
   aria-atomic='true'
+  tabindex='-1'
+  {{did-insert this.captureSection}}
+  {{did-update this.maybeScroll @isLoading}}
+  {{did-update this.maybeScroll @auditRun}}
 >
-  <h3
+  <h2
     id='results-heading'
     tabindex='-1'
     {{did-insert this.captureHeading}}
     {{did-update this.onResultsChange @isLoading @results}}
   >
-    {{#if @isLoading}}{{else if this.hasResults}}
-    <div local-class='image-with-text'>
-      <img
-        src='/a11ycat-sad.png'
-        alt=''
-        role='presentation'
-        local-class='a11ycat-image'
-      />
-      Audit complete. Found
-      {{this.resultCount}}
-      violations.
+    {{#if @isLoading}}
+      Running audit…
+    {{else if this.hasResults}}
+      <div local-class='image-with-text'>
+        <img
+          src='/a11ycat-sad.png'
+          alt=''
+          role='presentation'
+          local-class='sad-a11ycat-image'
+        />
+        Accessibility issues found ({{this.resultCount}})
       </div>
     {{else if this.hasNoResults}}
-      Audit complete, no violations found.
+      <div local-class='image-with-text'>
+        <img
+          src='/a11ycat-happy.png'
+          alt=''
+          role='presentation'
+          local-class='happy-a11ycat-image'
+        />
+        No accessibility issues found
+      </div>
     {{else}}
       Audit Results
     {{/if}}
-  </h3>
+  </h2>
 
   {{#if @isLoading}}
-    <LoadingScreen @message='Running audit…' />
+    <LoadingScreen @message='Running audit…' @onClose={{action 'closeModal'}} />
 
   {{else if this.hasResults}}
     <p local-class='sr-only' aria-live='polite'>
@@ -87,16 +99,6 @@
     <p local-class='sr-only' aria-live='polite'>
       Audit complete. No issues found.
     </p>
-    <div local-class='image-with-text'>
-      <img
-        src='/a11ycat-happy.png'
-        alt=''
-        role='presentation'
-        local-class='a11ycat-image'
-      />
-      <span>Purrrfect, no accessibility issues found</span>
-    </div>
-
   {{else if (and @htmlInput (not @auditRun))}}
     <p local-class='no-results-yet'>
       Click “Run Audit” to check your HTML for accessibility issues 🔍

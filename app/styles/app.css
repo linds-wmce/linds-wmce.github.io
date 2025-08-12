@@ -36,7 +36,27 @@ input {
   border-radius: 0.25rem;
 }
 
-.sr-only {
+:global(.modal-overlay) {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+:global(.modal-container) {
+  position: relative;
+  z-index: 1001;
+  background: white;
+  border-radius: 6px;
+  padding: 2rem;
+  width: min(500px, 92vw);
+  pointer-events: auto;
+}
+
+:global(.sr-only) {
   position: absolute !important;
   width: 1px;
   height: 1px;

@@ -6,6 +6,7 @@ interface AuditFormArgs {
   updateInput: (event: Event) => void;
   runAudit: (event: Event) => void;
   clearResults?: () => void;
+  isLoading?: boolean;
 }
 
 export default class AuditFormComponent extends Component<AuditFormArgs> {
@@ -24,5 +25,10 @@ export default class AuditFormComponent extends Component<AuditFormArgs> {
   handleSubmit(event: Event) {
     event.preventDefault();
     this.args.runAudit(event);
+  }
+
+  @action
+  closeModal() {
+    this.args.isLoading = true;
   }
 }

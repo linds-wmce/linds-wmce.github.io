@@ -28,7 +28,12 @@
   margin-top: 2rem;
 }
 
-.a11ycat-image {
+.happy-a11ycat-image {
+  height: 200px;
+  width: 200px;
+}
+
+.sad-a11ycat-image {
   height: 100px;
   width: 100px;
 }

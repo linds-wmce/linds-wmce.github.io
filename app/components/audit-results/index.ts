@@ -6,39 +6,71 @@ interface Args {
   results?: AuditResult[] | null;
   htmlInput?: string | null;
   isLoading?: boolean;
-  auditRun?: boolean; // <-- needed to drive the dynamic heading/states
+  auditRun?: boolean;
 }
 
 export default class AuditResults extends Component<Args> {
   private headingEl: HTMLElement | null = null;
+  private sectionEl: HTMLElement | null = null;
 
-  // --- handy getters for your template ---
+  @action
+  closeModal() {
+    this.args.isLoading = false;
+  }
+
   get hasRun() {
-    return Boolean(this.args.auditRun);
+    const run = Boolean(this.args.auditRun);
+    return run;
   }
 
   get resultCount() {
-    return this.args.results?.length ?? 0;
+    const count = this.args.results?.length ?? 0;
+    return count;
   }
 
   get hasResults() {
-    return this.hasRun && this.resultCount > 0;
+    const value = this.hasRun && this.resultCount > 0;
+    return value;
   }
 
   get hasNoResults() {
-    return this.hasRun && !this.args.isLoading && this.resultCount === 0;
+    const value = this.hasRun && !this.args.isLoading && this.resultCount === 0;
+    return value;
   }
 
-  @action
-  captureHeading(el: HTMLElement) {
+  @action captureHeading(el: HTMLElement) {
     this.headingEl = el;
   }
 
-  @action
-  onResultsChange() {
-    // Only move focus after a completed run (not while loading)
+  @action captureSection(el: HTMLElement) {
+    this.sectionEl = el;
+  }
+
+  @action maybeScroll() {
+    if (!this.sectionEl) {
+      return;
+    }
+
+    if (this.args.isLoading || this.hasRun) {
+      console.log('[AuditResults] Scrolling into view...');
+      const prefersNoMotion =
+        typeof window !== 'undefined' &&
+        window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+      this.sectionEl.scrollIntoView({
+        behavior: prefersNoMotion ? 'auto' : 'smooth',
+        block: 'start',
+      });
+
+      this.sectionEl.focus({ preventScroll: true });
+    }
+  }
+
+  @action onResultsChange() {
     if (this.hasRun && !this.args.isLoading && this.headingEl) {
-      requestAnimationFrame(() => this.headingEl?.focus());
+      requestAnimationFrame(() => {
+        this.headingEl?.focus();
+      });
     }
   }
 }

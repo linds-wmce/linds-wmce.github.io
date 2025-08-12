@@ -1,7 +1,6 @@
-/* Global speed control */
 :root {
-  --run-duration: 1200ms;
-  --stride-duration: 200ms;
+  --run-duration: 1500ms;
+  --stride-duration: 400ms;
 }
 
 .loading-container {
@@ -23,8 +22,8 @@
 }
 
 .laser {
-  width: 8px;
-  height: 8px;
+  width: 4px;
+  height: 4px;
   background: red;
   border-radius: 50%;
   position: absolute;
@@ -41,7 +40,7 @@
   top: 50%;
   transform: translateY(-50%);
   animation: cat-move var(--run-duration) linear infinite,
-    cat-run var(--stride-duration) steps(2) infinite;
+    cat-run var(--stride-duration) steps(3) infinite;
 }
 
 @keyframes laser-move {
@@ -55,7 +54,7 @@
 
 @keyframes cat-move {
   0% {
-    left: -60px;
+    left: -90px;
   }
   100% {
     left: calc(100% - 60px);
