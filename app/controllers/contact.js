@@ -44,13 +44,13 @@ export default class ContactController extends Controller {
   @action
   async handleSubmit(event) {
     event.preventDefault();
-    
+
     this.isSubmitting = true;
     this.clearMessages();
 
     try {
       await this.simulateEmailSubmission();
-      
+
       this.name = '';
       this.email = '';
       this.subject = '';
@@ -64,15 +64,15 @@ export default class ContactController extends Controller {
   }
 
   async simulateEmailSubmission() {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     console.log('Contact form submitted:', {
       name: this.name,
       email: this.email,
       subject: this.subject,
-      message: this.message
+      message: this.message,
     });
-    
+
     // In a real app, you would send this to your email service
     // Example: await fetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) });
   }
