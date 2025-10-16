@@ -1,107 +1,93 @@
-<section
-  local-class='results-region'
-  role='region'
-  aria-labelledby='results-heading'
-  aria-busy={{@isLoading}}
-  aria-atomic='true'
-  tabindex='-1'
-  {{did-insert this.captureSection}}
-  {{did-update this.maybeScroll @isLoading}}
-  {{did-update this.maybeScroll @auditRun}}
->
-  <h2
-    id='results-heading'
-    tabindex='-1'
-    {{did-insert this.captureHeading}}
-    {{did-update this.onResultsChange @isLoading @results}}
-  >
+<div local-class="audit-results-wrapper">
+  <div local-class="report-section">
+    <h2 local-class="section-title">Accessibility Report</h2>
+
+    <div local-class="summary-cards">
+      <div local-class="summary-card critical">
+        <span local-class="card-icon">&#9650;</span>
+        <div local-class="card-content">
+          <p local-class="card-title">Critical Issues</p>
+          <p local-class="card-value">{{this.criticalCount}}</p>
+          <p local-class="card-description">Must be fixed</p>
+        </div>
+      </div>
+      <div local-class="summary-card warning">
+        <span local-class="card-icon">&#9888;</span>
+        <div local-class="card-content">
+          <p local-class="card-title">Warnings</p>
+          <p local-class="card-value">{{this.warningCount}}</p>
+          <p local-class="card-description">Should be addressed</p>
+        </div>
+      </div>
+      <div local-class="summary-card info">
+        <span local-class="card-icon">&#9432;</span>
+        <div local-class="card-content">
+          <p local-class="card-title">Suggestions</p>
+          <p local-class="card-value">{{this.infoCount}}</p>
+          <p local-class="card-description">Recommendations</p>
+        </div>
+      </div>
+    </div>
+
     {{#if @isLoading}}
-      Running audit…
+      <LoadingScreen @message='Running audit…' @onClose={{action 'closeModal'}} />
     {{else if this.hasResults}}
-      <div local-class='image-with-text'>
-        <img
-          src='/a11ycat-sad.png'
-          alt=''
-          role='presentation'
-          local-class='sad-a11ycat-image'
-        />
-        Accessibility issues found ({{this.resultCount}})
-      </div>
-    {{else if this.hasNoResults}}
-      <div local-class='image-with-text'>
-        <img
-          src='/a11ycat-happy.png'
-          alt=''
-          role='presentation'
-          local-class='happy-a11ycat-image'
-        />
-        No accessibility issues found
-      </div>
-    {{else}}
-      Audit Results
-    {{/if}}
-  </h2>
-
-  {{#if @isLoading}}
-    <LoadingScreen @message='Running audit…' @onClose={{action 'closeModal'}} />
-
-  {{else if this.hasResults}}
-    <p local-class='sr-only' aria-live='polite'>
-      Audit complete. Found
-      {{this.resultCount}}
-      issues.
-    </p>
-
-    <ul local-class='results'>
-      {{#each @results key='id' as |violation index|}}
-        <li
-          id='violation-{{violation.id}}'
-          local-class='violation'
-          data-impact='{{or violation.impact "unknown"}}'
-        >
-          <h3 local-class='violation-heading'>
-            <span local-class='impact-badge'>{{or
-                violation.impact
-                'unknown'
-              }}</span>
-            {{violation.id}}
-          </h3>
-
-          <p local-class='desc'>{{violation.description}}</p>
-          <p local-class='help'>{{violation.help}}</p>
-
-          {{#if violation.nodes}}
-            <ul local-class='violation-nodes'>
-              {{#each violation.nodes key='@index' as |node nodeIndex|}}
-                <li local-class='node'>
-                  <div local-class='node-header'>
-                    <span local-class='field-label'>Affected element</span>
-                    <code local-class='selector'>{{get node 'target.0'}}</code>
-                  </div>
-
-                  <div
-                    local-class='code-wrap'
-                    role='group'
-                    aria-label='HTML snippet'
-                  >
-                    <pre local-class='code-block'><code
+      <ul local-class="results-list">
+        {{#each @results key='id' as |violation index|}}
+          <li
+            id="violation-{{violation.id}}"
+            local-class="violation-item"
+            data-impact="{{or violation.impact 'unknown'}}"
+          >
+            <div local-class="violation-header">
+              <span local-class="impact-badge {{violation.impact}}">{{or
+                  violation.impact
+                  'unknown'
+                }}</span>
+              <h3 local-class="violation-title">{{violation.id}}</h3>
+            </div>
+            <p local-class="violation-description">{{violation.description}}</p>
+            <p local-class="violation-help">{{violation.help}}</p>
+            {{#if violation.nodes}}
+              <ul local-class="violation-nodes">
+                {{#each violation.nodes key='@index' as |node nodeIndex|}}
+                  <li local-class="node-item">
+                    <p local-class="node-label">Affected element</p>
+                    <code local-class="node-selector">{{get node 'target.0'}}</code>
+                    <pre local-class="code-snippet"><code
                       >{{node.html}}</code></pre>
-                  </div>
-                </li>
-              {{/each}}
-            </ul>
-          {{/if}}
-        </li>
-      {{/each}}
-    </ul>
+                  </li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    {{else if this.hasNoResults}}
+      <p local-class="no-results-message">No accessibility issues found. Great job!</p>
+    {{else if (and @htmlInput (not @auditRun))}}
+      <p local-class="no-results-message">Click “Check Accessibility” to analyze your HTML.</p>
+    {{/if}}
+  </div>
 
-  {{else if this.hasNoResults}}
-    <p local-class='sr-only' aria-live='polite'>
-      Audit complete. No issues found.
-    </p>
-  {{else if (and @htmlInput (not @auditRun))}}
-    <p local-class='no-results-yet'>
-      Click “Run Audit” to check your HTML for accessibility issues 🔍
-    </p>
-  {{/if}}
-</section>
+  <div local-class="quick-fixes-section">
+    <h3 local-class="sidebar-title">Quick Fixes & Best Practices</h3>
+    <ul local-class="fix-list">
+      <li local-class="fix-item">
+        <h4 local-class="fix-heading">Add Alt Text</h4>
+        <p local-class="fix-description">Provide descriptive alternative text for all images</p>
+        <pre local-class="fix-code">alt="Description"</pre>
+      </li>
+      <li local-class="fix-item">
+        <h4 local-class="fix-heading">Use Semantic HTML</h4>
+        <p local-class="fix-description">Structure content with proper heading hierarchy</p>
+        <pre local-class="fix-code">&lt;h1&gt;, &lt;h2&gt;, &lt;nav&gt;</pre>
+      </li>
+      <li local-class="fix-item">
+        <h4 local-class="fix-heading">Keyboard Navigation</h4>
+        <p local-class="fix-description">Ensure all interactive elements are keyboard accessible</p>
+        <pre local-class="fix-code">tabindex="0"</pre>
+      </li>
+    </ul>
+  </div>
+</div>
