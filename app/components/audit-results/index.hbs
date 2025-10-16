@@ -30,10 +30,10 @@
     </div>
 
     {{#if @isLoading}}
-      <LoadingScreen @message='Running audit…' @onClose={{action 'closeModal'}} />
+      <LoadingScreen @message='Running audit…' @onClose={{this.closeModal}} />
     {{else if this.hasResults}}
       <ul local-class="results-list">
-        {{#each @results key='id' as |violation index|}}
+        {{#each @results key='id' as |violation|}}
           <li
             id="violation-{{violation.id}}"
             local-class="violation-item"
@@ -50,7 +50,7 @@
             <p local-class="violation-help">{{violation.help}}</p>
             {{#if violation.nodes}}
               <ul local-class="violation-nodes">
-                {{#each violation.nodes key='@index' as |node nodeIndex|}}
+                {{#each violation.nodes key='@index' as |node|}}
                   <li local-class="node-item">
                     <p local-class="node-label">Affected element</p>
                     <code local-class="node-selector">{{get node 'target.0'}}</code>
