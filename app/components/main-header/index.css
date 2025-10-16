@@ -1,21 +1,57 @@
-.header {
-  text-align: center;
-  margin-bottom: 2rem;
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  padding: 1rem 2rem;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color-text);
 }
 
 .logo {
-  max-height: 150px;
+  height: 50px;
+  margin-right: 10px;
 }
 
 .title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
+  margin: 0;
 }
 
 .subtitle {
   margin-top: 0.5rem;
   color: #333;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-list li {
+  margin-left: 20px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: var(--color-accent-primary);
+}
+
+.nav-link-icon {
+  height: 30px;
 }

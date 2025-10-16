@@ -1,11 +1,19 @@
-<header local-class='header'>
-  <h1 local-class='title'>
+<div local-class="wrapper">
+  <LinkTo @route="index" local-class="logo-container">
     <img
-      src='/a11ycat-main.png'
-      alt=''
-      role='presentation'
-      local-class='logo'
-    />a11ycat</h1>
-  <p id='subtitle' local-class='subtitle'>Accessibility Audit Tool</p>
+      src="/a11ycat-main.png"
+      alt="A11ycat logo"
+      local-class="logo"
+    />
+    <h1 local-class="title">a11ycat</h1>
+  </LinkTo>
 
-</header>
+  <nav local-class="nav">
+    <ul local-class="nav-list">
+      <li><a href="/examples" local-class="nav-link">Examples</a></li>
+      <li><a href="https://www.w3.org/TR/WCAG21/" local-class="nav-link">WCAG Guidelines</a></li>
+      <li><a href="https://github.com/linds-wmce/linds-wmce.github.io.git" local-class="nav-link"><img src="/github-logo.png" alt="GitHub Logo" local-class="nav-link-icon"></a></li>
+    </ul>
+  </nav>
+
+</div>
