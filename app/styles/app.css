@@ -1,35 +1,49 @@
 :root {
   --color-bg: #ffffff;
-  --color-text: #100409;
-  --color-accent: #c490d1;
-  --color-muted: #f1f1f1;
-  --color-banner-bg: #f9f7fb;
+  --color-light-bg: #f7f7f7;
+  --color-text: #333333;
+  --color-text-light: #666666;
+  --color-accent-primary: #4a2c8a;
+  --color-accent-secondary: #e0e0e0;
+  --color-border-light: #e0e0e0;
+  --color-critical: #d9534f;
+  --color-warning: #f0ad4e;
+  --color-info: #5bc0de;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: system-ui, sans-serif;
+  line-height: 1.6;
+  margin: 0;
 }
 
 button {
-  background: var(--color-accent);
-  color: var(--color-text);
+  background: var(--color-accent-primary);
+  color: #ffffff;
   border: none;
-  padding: 0.5em 1em;
+  padding: 0.75em 1.5em;
   font-weight: 600;
   border-radius: 0.25rem;
+  cursor: pointer;
 }
 
 button.secondary {
-  background: transparent;
-  border: 1px solid var(--color-accent);
+  background: var(--color-accent-secondary);
+  border: 1px solid var(--color-border-light);
   color: var(--color-text);
 }
 
 textarea,
 input {
-  border: 1px solid var(--color-muted);
+  border: 1px solid var(--color-border-light);
   background: #fff;
   padding: 0.75em;
   width: 100%;
@@ -66,4 +80,14 @@ input {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1rem 2rem;
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  border-top: 1px solid var(--color-border-light);
 }

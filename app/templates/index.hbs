@@ -1,0 +1,16 @@
+<MainHeader />
+
+<div class='audit-region' aria-busy={{this.isLoading}}>
+  <AuditForm as |form|>
+    <AuditResults
+      @results={{form.auditResults}}
+      @htmlInput={{form.htmlInput}}
+      @isLoading={{form.isLoading}}
+      @auditRun={{form.auditRun}}
+    />
+  </AuditForm>
+</div>
+
+<div class="footer-content">
+  <Footer />
+</div>
