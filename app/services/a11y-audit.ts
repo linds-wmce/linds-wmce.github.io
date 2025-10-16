@@ -1,5 +1,5 @@
-import Service from '@ember/service';
-import axe, { AxeResults } from 'axe-core';
+import Service from "@ember/service";
+import axe, { AxeResults } from "axe-core";
 
 export interface AuditResult {
   id: string;
@@ -14,12 +14,11 @@ export interface AuditResult {
 
 export default class A11yAuditService extends Service {
   async runAudit(html: string): Promise<AuditResult[]> {
-    // Inject the provided HTML into an offscreen container
-    const container = document.createElement('div');
+    const container = document.createElement("div");
     container.innerHTML = html;
-    container.setAttribute('role', 'document');
-    container.style.position = 'absolute';
-    container.style.left = '-9999px';
+    container.setAttribute("role", "document");
+    container.style.position = "absolute";
+    container.style.left = "-9999px";
     document.body.appendChild(container);
 
     try {
@@ -36,12 +35,41 @@ export default class A11yAuditService extends Service {
         })),
       }));
     } catch (e) {
-      // Don’t throw—just return empty so UI stays happy
-      // eslint-disable-next-line no-console
-      console.error('Accessibility audit failed:', e);
+      console.error("Accessibility audit failed:", e);
       return [];
     } finally {
       container.remove();
+    }
+  }
+
+  async runAuditForUrl(url: string): Promise<AuditResult[]> {
+    try {
+      const response = await fetch("https://a11ycat-litterbox-production.up.railway.app/audit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.statusText}`);
+      }
+
+      const results = await response.json();
+
+      // Map results from litterbox to same shape as runAudit
+      return results.violations.map((violation: any) => ({
+        id: violation.id,
+        description: violation.description,
+        help: violation.help,
+        impact: violation.impact ?? null,
+        nodes: violation.nodes.map((node: any) => ({
+          html: node.html,
+          target: node.target.map(String),
+        })),
+      }));
+    } catch (e) {
+      console.error("URL audit failed:", e);
+      return [];
     }
   }
 }
