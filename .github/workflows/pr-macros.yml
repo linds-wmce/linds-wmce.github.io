@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Update PR body and post comment
+      - name: Post PR macro information as a comment
         uses: actions/github-script@v7
         with:
           script: |
@@ -37,24 +37,6 @@ jobs:
               taskLink = '[#' + issueNumber + '](https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/issues/' + issueNumber + ')';
             }
             const shortSha = pr.head.sha.substring(0, 7);
-            
-            let prBody = pr.body || '';
-            prBody = prBody.replace(/\$PREVIEW_LINK/g, previewUrl);
-            prBody = prBody.replace(/\$TASK_LINK/g, taskLink);
-            prBody = prBody.replace(/revision=([a-f0-9]{40})/g, 'revision=' + pr.head.sha);
-            
-            try {
-              await github.rest.pulls.update({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: prNumber,
-                body: prBody,
-              });
-              console.log('Successfully updated PR body');
-            } catch (error) {
-              console.log('Could not update PR body (permissions issue):', error.message);
-            }
-            
             const comment = '## 🤖 PR Information\n\n' +
               '**🌐 Preview Deployment:** ' + previewUrl + '  \n' +
               '**📋 Task Link:** ' + taskLink + '  \n' +

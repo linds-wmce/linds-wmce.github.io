@@ -6,8 +6,7 @@ interface Args {
   results?: AuditResult[];
 }
 
-export default class Examples extends Component<Args> {
-  private headingEl: HTMLElement | null = null;
+export default class examples extends Component<Args> {
 
   @action
   copyCode(event: MouseEvent) {

@@ -1,0 +1,90 @@
+<MainHeader />
+
+<div class="contact-page">
+  <div class="contact-hero">
+    <h2>Get in Touch</h2>
+    <p>Have questions about accessibility or need help with your website? We'd love to hear from you!</p>
+  </div>
+
+  <div class="contact-form-container">
+    <form {{on "submit" this.handleSubmit}} class="contact-form">
+      <div class="form-group">
+        <label for="contact-name" class="form-label">Name *</label>
+        <input
+          type="text"
+          id="contact-name"
+          class="form-input"
+          value={{this.name}}
+          {{on "input" this.updateName}}
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="contact-email" class="form-label">Email *</label>
+        <input
+          type="email"
+          id="contact-email"
+          class="form-input"
+          value={{this.email}}
+          {{on "input" this.updateEmail}}
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="contact-subject" class="form-label">Subject *</label>
+        <input
+          type="text"
+          id="contact-subject"
+          class="form-input"
+          value={{this.subject}}
+          {{on "input" this.updateSubject}}
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="contact-message" class="form-label">Message *</label>
+        <textarea
+          id="contact-message"
+          class="form-textarea"
+          rows="6"
+          value={{this.message}}
+          {{on "input" this.updateMessage}}
+          required
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        class="submit-button"
+        disabled={{this.isSubmitting}}
+      >
+        {{#if this.isSubmitting}}
+          Sending...
+        {{else}}
+          Send Message
+        {{/if}}
+      </button>
+
+      {{#if this.submitSuccess}}
+        <div class="success-message">
+          Thank you! Your message has been sent successfully.
+        </div>
+      {{/if}}
+
+      {{#if this.submitError}}
+        <div class="error-message">
+          Sorry, there was an error sending your message. Please try again.
+        </div>
+      {{/if}}
+    </form>
+  </div>
+</div>
+
+<div class="footer-content">
+  <p>Privacy</p>
+  <p>Terms</p>
+  <p>Contact</p>
+</div>

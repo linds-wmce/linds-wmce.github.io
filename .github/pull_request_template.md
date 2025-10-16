@@ -1,8 +1,8 @@
 # Pull Request
 
-**Task URL:** $TASK_LINK
+**Task URL:** _Link to Jira, ADO, Asana, etc. (or name your branch with the ticket ID for auto-linking)_
 
-**🌐 Preview Deployment:** $PREVIEW_LINK
+**🌐 Preview Deployment:** _A bot will post preview and task links in a comment below when the PR is created_
 
 ## 🧐 What Changed and Why?
 

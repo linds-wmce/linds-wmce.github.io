@@ -1,48 +1,15 @@
-<div
-  local-class='tabs'
-  role='tablist'
-  aria-label='a11ycat views'
-  {{on 'keydown' this.handleKeydown}}
->
-  <button
-    type='button'
-    id='tab-audit'
-    role='tab'
-    aria-selected={{eq @activeTab 'Audit'}}
-    tabindex={{if (eq @activeTab 'Audit') '0' '-1'}}
-    {{on 'click' (fn @setTab 'Audit')}}
+<nav local-class='tabs' aria-label='a11ycat views'>
+  <LinkTo 
+    @route='index' 
     local-class='tab {{if (eq @activeTab "Audit") "tab--active"}}'
   >
     Audit
-  </button>
+  </LinkTo>
 
-  <button
-    type='button'
-    id='tab-examples'
-    role='tab'
-    aria-selected={{eq @activeTab 'Examples'}}
-    tabindex={{if (eq @activeTab 'Examples') '0' '-1'}}
-    {{on 'click' (fn @setTab 'Examples')}}
-    local-class='tab {{if (eq @activeTab "Examples") "tab--active"}}'
+  <LinkTo 
+    @route='examples' 
+    local-class='tab {{if (eq @activeTab "examples") "tab--active"}}'
   >
-    Examples
-  </button>
-</div>
-
-<div
-  id='panel-audit'
-  role='tabpanel'
-  aria-labelledby='tab-audit'
-  hidden={{not (eq @activeTab 'Audit')}}
->
-  {{yield to='audit'}}
-</div>
-
-<div
-  id='panel-examples'
-  role='tabpanel'
-  aria-labelledby='tab-examples'
-  hidden={{not (eq @activeTab 'Examples')}}
->
-  {{yield to='examples'}}
-</div>
+    examples
+  </LinkTo>
+</nav>
