@@ -69,10 +69,10 @@
 .textarea {
   width: 100%;
   padding: 0.75rem;
-  padding-right: 2.5rem; /* Make room for the clear button */
+  padding-right: 2.5rem;
   border: 1px solid var(--color-border-light);
   border-radius: 0.25rem;
-  font-family: 'Roboto Mono', monospace; /* Use a monospace font for code input */
+  font-family: 'Roboto Mono', monospace;
   min-height: 150px;
   resize: vertical;
 }
@@ -118,6 +118,15 @@
 .upload-option:hover {
   color: var(--color-accent-primary);
   text-decoration: underline;
+}
+
+.url-input {
+  padding: 0.75rem;
+  padding-right: 2.5rem;
+  border: 1px solid var(--color-border-light);
+  border-radius: 0.25rem;
+  font-family: 'Roboto Mono', monospace;
+  resize: none;
 }
 
 .check-accessibility-button {
