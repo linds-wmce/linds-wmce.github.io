@@ -1,34 +1,65 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
+import type A11yAuditService from 'a11ycat/services/a11y-audit';
+import type { AuditResult } from 'a11ycat/services/a11y-audit';
 
 interface AuditFormArgs {
-  htmlInput: string;
-  updateInput: (event: Event) => void;
-  runAudit: (event: Event) => void;
-  clearResults?: () => void;
-  isLoading?: boolean;
 }
 
-export default class AuditFormComponent extends Component<AuditFormArgs> {
-  @action
-  handleInput(event: Event) {
-    // Just update the HTML input value
-    this.args.updateInput(event);
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+const MIN_LOADING_MS = 2000;
 
-    const value = (event.target as HTMLTextAreaElement).value.trim();
-    if (value === '' && this.args.clearResults) {
-      this.args.clearResults();
+export default class AuditFormComponent extends Component<AuditFormArgs> {
+  @service declare a11yAudit: A11yAuditService;
+
+  @tracked activeTab = 'Audit';
+  @tracked htmlInput = '';
+  @tracked isLoading = false;
+  @tracked auditResults: AuditResult[] | null = null;
+  @tracked auditRun = false;
+
+  @action
+  updateInput(event: Event) {
+    const target = event.target as HTMLTextAreaElement;
+    this.htmlInput = target.value;
+
+    if (!this.htmlInput.trim()) {
+      this.auditResults = null;
+      this.auditRun = false;
     }
   }
 
   @action
-  handleSubmit(event: Event) {
+  async runAudit(event: Event) {
     event.preventDefault();
-    this.args.runAudit(event);
+    this.auditRun = true;
+    this.isLoading = true;
+
+    try {
+      const [results] = await Promise.all([
+        this.a11yAudit.runAudit(this.htmlInput),
+        sleep(MIN_LOADING_MS),
+      ]);
+      this.auditResults = results;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  @action
+  handleInput(event: Event) {
+    this.updateInput(event);
+  }
+
+  @action
+  handleSubmit(event: Event) {
+    this.runAudit(event);
   }
 
   @action
   closeModal() {
-    this.args.isLoading = true;
+    this.isLoading = true;
   }
 }

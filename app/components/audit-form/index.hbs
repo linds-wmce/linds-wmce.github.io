@@ -1,30 +1,47 @@
-<form {{on 'submit' this.handleSubmit}} local-class='form'>
-  <p id='form-instructions' local-class='instructions'>
-    <p>Find accessibility violations in your HTML with ease, with the help of
-      a11ycat, your friendly neighbourhood accessibility auditor.
-    </p>
-    <p>Find some examples of HTML to use on the Examples tab.</p>
+<div local-class="hero-section">
+  <h2 local-class="hero-title">Make Your Website Accessible</h2>
+  <p local-class="hero-description">
+    Paste your HTML code or upload files to instantly check for accessibility violations and get actionable fixes
   </p>
+</div>
 
-  <label for='html-input' local-class='label'>HTML to Audit:</label>
+<form {{on 'submit' this.runAudit}} local-class="form-container">
+  <div local-class="input-header">
+    <label for="html-input" local-class="label">HTML Input</label>
+    <div local-class="action-buttons">
+      <button type="button" local-class="secondary-button">Paste HTML</button>
+      <button type="button" local-class="secondary-button">Upload File</button>
+    </div>
+  </div>
+
   <textarea
-    id='html-input'
-    name='html-input'
-    local-class='textarea'
-    rows='8'
+    id="html-input"
+    name="html-input"
+    local-class="textarea"
+    rows="10"
     value={{@htmlInput}}
-    {{on 'input' this.handleInput}}
-    aria-describedby='form-instructions'
-    spellcheck='false'
-    placeholder="Paste your HTML here and click 'Run Audit' to get started."
+    {{on 'input' this.updateInput}}
+    aria-describedby="form-instructions"
+    spellcheck="false"
+    placeholder="Paste your HTML code here..."
   ></textarea>
 
+  <div local-class="upload-option">
+    <span class="icon-upload">↑</span> Or upload .html file
+  </div>
+
   <button
-    type='submit'
-    local-class='submit'
-    aria-describedby='form-instructions'
-    disabled={{not @htmlInput}}
+    type="submit"
+    local-class="check-accessibility-button"
+    disabled={{not this.htmlInput}}
   >
-    Run Audit
+    <span class="icon-search">Q</span> Check Accessibility
   </button>
 </form>
+
+{{yield (hash
+  htmlInput=this.htmlInput
+  isLoading=this.isLoading
+  auditResults=this.auditResults
+  auditRun=this.auditRun
+)}}
