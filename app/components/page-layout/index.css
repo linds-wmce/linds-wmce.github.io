@@ -1,8 +1,16 @@
-.container {
-  max-width: 768px;
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  background-color: var(--color-secondary);
-  border: 1px solid var(--color-muted);
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
