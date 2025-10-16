@@ -15,12 +15,12 @@ _Add screenshots, GIFs, or videos if applicable. Delete this section if not rele
 ### 🔴 Before
 
 _Replace the default image below with your "before" screenshot_
-![Before](https://raw.githubusercontent.com/linds-wmce/linds-wmce.github.io/main/public/a11ycat-sad.png)
+<img src="https://raw.githubusercontent.com/linds-wmce/linds-wmce.github.io/main/public/a11ycat-sad.png" alt="Before" width="400" />
 
 ### 🟢 After
 
 _Replace the default image below with your "after" screenshot_
-![After](https://raw.githubusercontent.com/linds-wmce/linds-wmce.github.io/main/public/a11ycat-happy.png)
+<img src="https://raw.githubusercontent.com/linds-wmce/linds-wmce.github.io/main/public/a11ycat-happy.png" alt="After" width="400" />
 
 
 ## 🔖 Type of Change
