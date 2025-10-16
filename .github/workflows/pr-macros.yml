@@ -36,11 +36,33 @@ jobs:
               const issueNumber = issueMatch[1];
               taskLink = '[#' + issueNumber + '](https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/issues/' + issueNumber + ')';
             }
+
             const shortSha = pr.head.sha.substring(0, 7);
+            const commitUrl = 'https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/commit/' + pr.head.sha;
+            
+            // Replace macros in PR body
+            let body = pr.body || '';
+            body = body
+              .replaceAll(/\$PREVIEW_URL/g, previewUrl)
+              .replaceAll(/\$PREVIEW/g, previewUrl)
+              .replaceAll(/\$COMMIT_SHA/g, pr.head.sha)
+              .replaceAll(/\$SHORT_SHA/g, shortSha)
+              .replaceAll(/\$COMMIT_LINK/g, commitUrl);
+            
+            // Update PR body if it changed
+            if (body !== pr.body) {
+              await github.rest.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber,
+                body: body,
+              });
+            }
+            
             const comment = '## 🤖 PR Information\n\n' +
               '**🌐 Preview Deployment:** ' + previewUrl + '  \n' +
               '**📋 Task Link:** ' + taskLink + '  \n' +
-              '**🔗 Latest Commit:** ' + shortSha + '\n\n' +
+              '**🔗 Latest Commit:** [' + shortSha + '](' + commitUrl + ')\n\n' +
               '_This comment will update automatically when you push new commits._';
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,

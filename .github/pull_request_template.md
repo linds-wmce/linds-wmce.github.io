@@ -2,7 +2,8 @@
 
 **Task URL:** _Link to Jira, ADO, Asana, etc. (or name your branch with the ticket ID for auto-linking)_
 
-**🌐 Preview Deployment:** _A bot will post preview and task links in a comment below when the PR is created_
+**🌐 Preview Deployment:** _A bot will post preview and task links in a comment below when the PR is created_  
+_💡 Tip: Use `$PREVIEW_URL` in this description and it will auto-update with the preview link!_
 
 ## 🧐 What Changed and Why?
 
@@ -46,7 +47,7 @@ _Replace the default image below with your "after" screenshot_
 
 _What steps should the reviewer take to test this PR? Be descriptive. Don't make us think. Our best reviews come when you've done most of the work._
 
-1. Visit the preview URL (posted by bot in comments)
+1. Visit $PREVIEW_URL
 2. Click on `___`
 3. Enter `___`
 4. Observe that `___` happened
