@@ -7,35 +7,44 @@
 
 <form {{on 'submit' this.runAudit}} local-class="form-container">
   <div local-class="input-header">
-    <label for="html-input" local-class="label">HTML Input</label>
+    <label for="html-input" local-class="label">Raw HTML Input</label>
     <div local-class="action-buttons">
-      <button type="button" local-class="secondary-button">Paste HTML</button>
-      <button type="button" local-class="secondary-button">Upload File</button>
+      <button type="button" local-class="secondary-button" {{on "click" this.handleFileUpload}}>Upload File</button>
     </div>
   </div>
 
-  <textarea
-    id="html-input"
-    name="html-input"
-    local-class="textarea"
-    rows="10"
-    value={{@htmlInput}}
-    {{on 'input' this.updateInput}}
-    aria-describedby="form-instructions"
-    spellcheck="false"
-    placeholder="Paste your HTML code here..."
-  ></textarea>
-
-  <div local-class="upload-option">
-    <span class="icon-upload">↑</span> Or upload .html file
+  <div local-class="textarea-wrapper">
+    <textarea
+      id="html-input"
+      name="html-input"
+      local-class="textarea"
+      rows="10"
+      value={{this.htmlInput}}
+      {{on 'input' this.handleInput}}
+      aria-describedby="form-instructions"
+      spellcheck="false"
+      placeholder="Paste your HTML code here..."
+    ></textarea>
+    {{#if this.htmlInput}}
+      <button 
+        type="button" 
+        local-class="textarea-clear-button" 
+        {{on "click" this.handleClear}}
+        aria-label="Clear text"
+        title="Clear text"
+      >
+        ×
+      </button>
+    {{/if}}
   </div>
+
 
   <button
     type="submit"
     local-class="check-accessibility-button"
     disabled={{not this.htmlInput}}
   >
-    <span class="icon-search">Q</span> Check Accessibility
+    <span class="icon-search"></span> Check Accessibility
   </button>
 </form>
 

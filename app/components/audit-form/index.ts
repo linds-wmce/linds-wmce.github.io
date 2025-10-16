@@ -59,6 +59,42 @@ export default class AuditFormComponent extends Component<AuditFormArgs> {
   }
 
   @action
+  handleClear() {
+    this.htmlInput = '';
+    this.auditResults = null;
+    this.auditRun = false;
+  }
+
+  @action
+  handleFileUpload() {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.html,.htm';
+    fileInput.style.display = 'none';
+    
+    fileInput.onchange = (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      const file = target.files?.[0];
+      
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const content = e.target?.result as string;
+          this.htmlInput = content;
+          this.auditResults = null;
+          this.auditRun = false;
+        };
+        reader.readAsText(file);
+      }
+      
+      document.body.removeChild(fileInput);
+    };
+    
+    document.body.appendChild(fileInput);
+    fileInput.click();
+  }
+
+  @action
   closeModal() {
     this.isLoading = true;
   }
