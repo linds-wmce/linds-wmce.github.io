@@ -1,6 +1,8 @@
 # Pull Request
 
-**Task URL:** _Link to Jira, ADO, Asana, etc._
+**Task URL:** $TASK_LINK
+
+**🌐 Preview Deployment:** $PREVIEW_LINK
 
 ## 🧐 What Changed and Why?
 
@@ -44,7 +46,7 @@ _Replace the default image below with your "after" screenshot_
 
 _What steps should the reviewer take to test this PR? Be descriptive. Don't make us think. Our best reviews come when you've done most of the work._
 
-1. Visit `___`
+1. Visit the preview URL (posted by bot in comments)
 2. Click on `___`
 3. Enter `___`
 4. Observe that `___` happened
