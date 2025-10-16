@@ -3,7 +3,6 @@ name: PR-macros
 on:
   pull_request_target:
     types: [opened, edited, synchronize]
-  workflow_dispatch:
 
 permissions:
   pull-requests: write
@@ -14,58 +13,57 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Update PR body and post comment
+      - name: Post PR macro information as a comment
         uses: actions/github-script@v7
         with:
           script: |
             const pr = context.payload.pull_request;
             const branchName = pr.head.ref;
             const prNumber = pr.number;
-            const previewUrl = 'https://a11ycat-pr-' + prNumber + '.surge.sh';
+
+            // Generate Surge preview URL
+            const previewUrl = `https://a11ycat-pr-${prNumber}.surge.sh`;
+
+            // Try to extract task ticket from branch name (supports Jira, Linear, GitHub issues, etc.)
+            // Matches patterns like: PROJ-123, LIN-456, #123, issue-123
             const jiraMatch = branchName.match(/([A-Z]+-\d+)/);
             const linearMatch = branchName.match(/(LIN-\d+)/i);
             const issueMatch = branchName.match(/(?:issue-|#)(\d+)/i);
+            
             let taskLink = "_No task ticket found in branch name_";
+            
+            // Handle task link replacement
             if (jiraMatch) {
               const jiraTicket = jiraMatch[0];
-              taskLink = '[' + jiraTicket + '](https://your-org.atlassian.net/browse/' + jiraTicket + ')';
+              // Update this URL with your actual Jira domain if you use Jira
+              taskLink = `[${jiraTicket}](https://your-org.atlassian.net/browse/${jiraTicket})`;
             } else if (linearMatch) {
               const linearTicket = linearMatch[0];
-              taskLink = '[' + linearTicket + '](https://linear.app/issue/' + linearTicket + ')';
+              taskLink = `[${linearTicket}](https://linear.app/issue/${linearTicket})`;
             } else if (issueMatch) {
               const issueNumber = issueMatch[1];
-              taskLink = '[#' + issueNumber + '](https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/issues/' + issueNumber + ')';
+              taskLink = `[#${issueNumber}](https://github.com/${context.repo.owner}/${context.repo.repo}/issues/${issueNumber})`;
             }
-            const shortSha = pr.head.sha.substring(0, 7);
-            
-            let prBody = pr.body || '';
-            prBody = prBody.replace(/\$PREVIEW_LINK/g, previewUrl);
-            prBody = prBody.replace(/\$TASK_LINK/g, taskLink);
-            prBody = prBody.replace(/revision=([a-f0-9]{40})/g, 'revision=' + pr.head.sha);
-            
-            try {
-              await github.rest.pulls.update({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: prNumber,
-                body: prBody,
-              });
-              console.log('Successfully updated PR body');
-            } catch (error) {
-              console.log('Could not update PR body (permissions issue):', error.message);
-            }
-            
-            const comment = '## 🤖 PR Information\n\n' +
-              '**🌐 Preview Deployment:** ' + previewUrl + '  \n' +
-              '**📋 Task Link:** ' + taskLink + '  \n' +
-              '**🔗 Latest Commit:** ' + shortSha + '\n\n' +
-              '_This comment will update automatically when you push new commits._';
+
+            const comment = `## 🤖 PR Information
+
+**🌐 Preview Deployment:** ${previewUrl}  
+**📋 Task Link:** ${taskLink}  
+**🔗 Latest Commit:** ${pr.head.sha.substring(0, 7)}
+
+_This comment will update automatically when you push new commits._`;
+
+            // Find existing bot comment
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
             });
-            const botComment = comments.find(c => c.user.type === 'Bot' && c.body.includes('🤖 PR Information'));
+            
+            const botComment = comments.find(c => 
+              c.user.type === 'Bot' && c.body.includes('🤖 PR Information')
+            );
+            
             if (botComment) {
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
