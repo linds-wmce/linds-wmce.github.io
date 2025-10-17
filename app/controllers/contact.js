@@ -49,31 +49,35 @@ export default class ContactController extends Controller {
     this.clearMessages();
 
     try {
-      await this.simulateEmailSubmission();
+      const response = await fetch('https://formspree.io/f/mwprynkz', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: this.name,
+          email: this.email,
+          subject: this.subject,
+          message: this.message,
+          _replyto: this.email,
+        }),
+      });
 
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      // Clear form on success
       this.name = '';
       this.email = '';
       this.subject = '';
       this.message = '';
       this.submitSuccess = true;
     } catch (error) {
+      console.error('Error sending message:', error);
       this.submitError = true;
     } finally {
       this.isSubmitting = false;
     }
-  }
-
-  async simulateEmailSubmission() {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    console.log('Contact form submitted:', {
-      name: this.name,
-      email: this.email,
-      subject: this.subject,
-      message: this.message,
-    });
-
-    // In a real app, you would send this to your email service
-    // Example: await fetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) });
   }
 }
