@@ -43,6 +43,13 @@ export default class AuditFormComponent extends Component<AuditFormArgs> {
         sleep(MIN_LOADING_MS),
       ]);
       this.auditResults = results;
+      
+      setTimeout(() => {
+        const resultsElement = document.getElementById('audit-results');
+        if (resultsElement) {
+          resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
     } finally {
       this.isLoading = false;
     }
