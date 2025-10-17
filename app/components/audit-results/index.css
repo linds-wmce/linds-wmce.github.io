@@ -6,6 +6,7 @@
 
 .report-section {
   flex: 3;
+  max-width: 665px;
 }
 
 .quick-fixes-section {
