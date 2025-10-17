@@ -21,9 +21,20 @@ module.exports = function (environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
+    
+    // Backend API configuration
+    API: {
+      backendUrl: 'https://a11ycat-litterbox-production.up.railway.app',
+    },
   };
 
   if (environment === 'development') {
+    // Use BACKEND_URL env var to override (e.g., BACKEND_URL=http://localhost:4000 npm start)
+    // Otherwise defaults to production Railway backend
+    if (process.env.BACKEND_URL) {
+      ENV.API.backendUrl = process.env.BACKEND_URL;
+    }
+    
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
