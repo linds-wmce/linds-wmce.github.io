@@ -67,7 +67,6 @@ export default class ContactController extends Controller {
         throw new Error('Failed to send message');
       }
 
-      // Clear form on success
       this.name = '';
       this.email = '';
       this.subject = '';
