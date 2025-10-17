@@ -1,9 +1,28 @@
+.footer {
+  width: 100%;
+  background-color: var(--color-light-bg);
+  border-top: 1px solid var(--color-border-light);
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
 .nav-list {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
   list-style: none;
   padding: 0;
   margin: 0;
-  gap: 20px;
 }
 
 .nav-link {

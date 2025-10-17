@@ -51,7 +51,3 @@
 .nav-link:hover {
   color: var(--color-accent-primary);
 }
-
-.nav-link-icon {
-  height: 30px;
-}
