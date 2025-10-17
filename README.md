@@ -1,7 +1,25 @@
-# a11ycat
+# a11ycat 🐱
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+An accessibility auditing tool that helps developers identify and fix accessibility issues in their web applications. 
+
+**Features:**
+- Audit HTML snippets directly in your browser
+- Audit live websites by URL via our backend API
+- Powered by [axe-core](https://github.com/dequelabs/axe-core) for comprehensive accessibility testing
+- Built with Ember.js
+
+## 🌐 Hosting
+
+- **Frontend**: Hosted on [GitHub Pages](https://linds-wmce.github.io/)
+- **Backend API**: Hosted on [Railway](https://a11ycat-litterbox-production.up.railway.app)
+
+### Backend
+The backend API `a11ycat-litterbox` handles URL-based accessibility audits by:
+- Fetching the target URL's HTML content
+- Running axe-core accessibility checks server-side
+- Returning structured violation data to the frontend
+
+**API Endpoint**: `https://a11ycat-litterbox-production.up.railway.app/audit`
 
 ## Prerequisites
 
@@ -15,38 +33,50 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-- `git clone <repository-url>` this repository
-- `cd a11ycat`
-- `yarn install`
+```bash
+git clone https://github.com/linds-wmce/linds-wmce.github.io.git
+cd linds-wmce.github.io
+yarn install
+```
 
 ## Running / Development
 
-- `ember serve`
-- Visit your app at [http://localhost:4200](http://localhost:4200).
-- Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
+```bash
+ember serve
+```
 
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
+- Visit your app at [http://localhost:4200](http://localhost:4200)
+- Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests)
 
 ### Running Tests
 
-- `ember test`
-- `ember test --server`
+```bash
+ember test                # Run tests once
+ember test --server       # Run tests in watch mode
+```
 
 ### Linting
 
-- `yarn lint`
-- `yarn lint:fix`
+```bash
+yarn lint                 # Check for linting errors
+yarn lint:fix             # Auto-fix linting errors
+```
 
 ### Building
 
-- `ember build` (development)
-- `ember build --environment production` (production)
+```bash
+ember build                              # Development build
+ember build --environment production     # Production build
+```
 
 ### Deploying
 
-Specify what it takes to deploy your app.
+The app automatically deploys to GitHub Pages when changes are pushed to the `main` branch.
+
+- **Production**: Automatically deployed via GitHub Actions to [linds-wmce.github.io](https://linds-wmce.github.io/)
+- **Preview Deployments**: Automatic preview URLs are generated for each pull request
+
+Manual deployment is handled by CI/CD - simply merge to `main` to deploy.
 
 ## Further Reading / Useful Links
 
