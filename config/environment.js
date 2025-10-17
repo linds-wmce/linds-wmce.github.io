@@ -21,7 +21,7 @@ module.exports = function (environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
-    
+
     // Backend API configuration
     API: {
       backendUrl: 'https://a11ycat-litterbox-production.up.railway.app',
@@ -34,7 +34,7 @@ module.exports = function (environment) {
     if (process.env.BACKEND_URL) {
       ENV.API.backendUrl = process.env.BACKEND_URL;
     }
-    
+
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
