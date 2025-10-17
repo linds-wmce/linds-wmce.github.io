@@ -27,13 +27,20 @@
 
 .nav-link {
   text-decoration: none;
-  color: inherit;
-  opacity: 0.8;
-  transition: opacity 0.2s ease;
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
 }
 
 .nav-link:hover,
 .nav-link:focus {
-  opacity: 1;
+  color: var(--color-accent-primary);
   text-decoration: underline;
+}
+
+.footer-text {
+  margin: 0;
+  color: var(--color-text-light);
+  font-size: 0.85rem;
+  text-align: center;
 }
