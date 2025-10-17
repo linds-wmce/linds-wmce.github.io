@@ -114,7 +114,19 @@
   top: 50%;
   transform: translateY(-50%);
   animation: cat-move var(--run-duration) linear infinite,
-    cat-run var(--stride-duration) steps(3) infinite;
+    cat-run var(--stride-duration) steps(1) infinite;
+  will-change: left, background-image;
+}
+
+.cat::before,
+.cat::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  background-image: url('/assets/a11ycat-run-2.png'), url('/assets/a11ycat-run-3.png');
+  opacity: 0;
+  pointer-events: none;
 }
 
 @keyframes laser-move {
@@ -139,10 +151,13 @@
   0% {
     background-image: url('/assets/a11ycat-run-1.png');
   }
-  50% {
+  33.33% {
     background-image: url('/assets/a11ycat-run-2.png');
   }
-  100% {
+  66.66% {
     background-image: url('/assets/a11ycat-run-3.png');
+  }
+  100% {
+    background-image: url('/assets/a11ycat-run-1.png');
   }
 }
