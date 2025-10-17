@@ -7,6 +7,7 @@ interface Args {
   htmlInput?: string | null;
   isLoading?: boolean;
   auditRun?: boolean;
+  errorMessage?: string | null;
 }
 
 export default class AuditResults extends Component<Args> {
@@ -34,8 +35,27 @@ export default class AuditResults extends Component<Args> {
   }
 
   get hasNoResults() {
-    const value = this.hasRun && !this.args.isLoading && this.resultCount === 0;
+    const value = this.hasRun && !this.args.isLoading && this.resultCount === 0 && !this.args.errorMessage;
     return value;
+  }
+
+  get hasError() {
+    return this.hasRun && !this.args.isLoading && this.args.errorMessage;
+  }
+
+  get criticalCount() {
+    return this.args.results?.filter((r) => r.impact === 'critical').length ?? 0;
+  }
+
+  get warningCount() {
+    return (
+      this.args.results?.filter((r) => r.impact === 'serious' || r.impact === 'moderate')
+        .length ?? 0
+    );
+  }
+
+  get infoCount() {
+    return this.args.results?.filter((r) => r.impact === 'minor').length ?? 0;
   }
 
   @action captureHeading(el: HTMLElement) {

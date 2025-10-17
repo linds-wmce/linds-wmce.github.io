@@ -1,5 +1,6 @@
 import Service from "@ember/service";
 import axe, { AxeResults } from "axe-core";
+import config from "a11ycat/config/environment";
 
 export interface AuditResult {
   id: string;
@@ -44,7 +45,10 @@ export default class A11yAuditService extends Service {
 
   async runAuditForUrl(url: string): Promise<AuditResult[]> {
     try {
-      const response = await fetch("https://a11ycat-litterbox-production.up.railway.app/audit", {
+      const apiUrl = `${config.API.backendUrl}/audit`;
+      console.log(`Auditing URL with backend: ${apiUrl}`);
+      
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url }),
@@ -56,7 +60,16 @@ export default class A11yAuditService extends Service {
 
       const results = await response.json();
 
-      // Map results from litterbox to same shape as runAudit
+      if (results.error) {
+        console.error("Backend audit error:", results.error, results.details);
+        throw new Error(`${results.error}: ${results.details}`);
+      }
+
+      if (!results.violations) {
+        console.error("No violations array in response:", results);
+        throw new Error("Invalid response format from backend");
+      }
+
       return results.violations.map((violation: any) => ({
         id: violation.id,
         description: violation.description,
@@ -69,7 +82,7 @@ export default class A11yAuditService extends Service {
       }));
     } catch (e) {
       console.error("URL audit failed:", e);
-      return [];
+      throw e;
     }
   }
 }

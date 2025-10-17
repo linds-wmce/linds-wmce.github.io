@@ -1,4 +1,4 @@
-<div local-class="audit-results-wrapper">
+<div local-class="audit-results-wrapper" id="audit-results">
   <div local-class="report-section">
     <h2 local-class="section-title">Accessibility Report</h2>
 
@@ -31,7 +31,18 @@
 
     {{#if @isLoading}}
       <LoadingScreen @message='Running audit…' @onClose={{this.closeModal}} />
+    {{else if this.hasError}}
+    <div local-class="results-container error-container">
+      <img src="/a11ycat-sad.png" alt="A11ycat sad" local-class="results-image">
+      <div local-class="error-message">
+        <h3>Audit Failed</h3>
+        <p>{{@errorMessage}}</p>
+        <p local-class="error-hint">This website may be blocking accessibility auditing tools, or there may be a technical issue. Try a different URL or paste the HTML directly instead.</p>
+      </div>
+    </div>
     {{else if this.hasResults}}
+    <div local-class="results-container">
+    <img src="/a11ycat-sad.png" alt="A11ycat sad" local-class="results-image">
       <ul local-class="results-list">
         {{#each @results key='id' as |violation|}}
           <li
@@ -63,8 +74,12 @@
           </li>
         {{/each}}
       </ul>
+    </div>
     {{else if this.hasNoResults}}
+    <div local-class="results-container">
+      <img src="/a11ycat-happy.png" alt="A11ycat happy" local-class="no-results-image">
       <p local-class="no-results-message">No accessibility issues found. Great job!</p>
+    </div>
     {{else if (and @htmlInput (not @auditRun))}}
       <p local-class="no-results-message">Click “Check Accessibility” to analyze your HTML.</p>
     {{/if}}

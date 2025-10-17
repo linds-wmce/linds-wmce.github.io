@@ -18,6 +18,7 @@ export default class AuditFormComponent extends Component<AuditFormArgs> {
   @tracked isLoading = false;
   @tracked auditResults: AuditResult[] | null = null;
   @tracked auditRun = false;
+  @tracked errorMessage: string | null = null;
 
   // 🔹 Raw HTML input handling
   @action
@@ -28,6 +29,7 @@ export default class AuditFormComponent extends Component<AuditFormArgs> {
     if (!this.htmlInput.trim()) {
       this.auditResults = null;
       this.auditRun = false;
+      this.errorMessage = null;
     }
   }
 
@@ -60,6 +62,7 @@ export default class AuditFormComponent extends Component<AuditFormArgs> {
     this.htmlInput = "";
     this.auditResults = null;
     this.auditRun = false;
+    this.errorMessage = null;
   }
 
   @action
@@ -80,6 +83,7 @@ export default class AuditFormComponent extends Component<AuditFormArgs> {
           this.htmlInput = content;
           this.auditResults = null;
           this.auditRun = false;
+          this.errorMessage = null;
         };
         reader.readAsText(file);
       }
@@ -103,12 +107,14 @@ export default class AuditFormComponent extends Component<AuditFormArgs> {
     this.urlInput = "";
     this.auditResults = null;
     this.auditRun = false;
+    this.errorMessage = null;
   }
 
   @action
   async runUrlAudit() {
     this.auditRun = true;
     this.isLoading = true;
+    this.errorMessage = null;
 
     try {
       const [results] = await Promise.all([
@@ -116,6 +122,16 @@ export default class AuditFormComponent extends Component<AuditFormArgs> {
         sleep(MIN_LOADING_MS),
       ]);
       this.auditResults = results;
+      
+      setTimeout(() => {
+        const resultsElement = document.getElementById('audit-results');
+        if (resultsElement) {
+          resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    } catch (error) {
+      this.errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+      this.auditResults = null;
     } finally {
       this.isLoading = false;
     }
